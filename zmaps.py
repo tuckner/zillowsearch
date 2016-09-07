@@ -24,7 +24,7 @@ def genroute(*args):
 		routes.append(cords)
 
 	routelink = "https://www.google.com/maps/dir/38.9838505,-94.6218913/" + routes[0] + "/" + routes[1] + "/" + routes[2] + "/" + routes[3]
-	maplink = "https://google.com/maps/embed/v1/directions?key=" + key + "&origin=38.9838505,-94.6218913&destination=38.9838505,-94.6218913&waypoints=" + routes[1] + "|" + routes[2] + "|" + routes[3]
+	maplink = "https://google.com/maps/embed/v1/directions?key=" + key + "&origin=38.9838505,-94.6218913&destination=38.9838505,-94.6218913&waypoints=" + routes[0] + "|" + routes[1] + "|" + routes[2]
 
 	return routelink, maplink
 
