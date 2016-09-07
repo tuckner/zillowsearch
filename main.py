@@ -1,6 +1,5 @@
 import zmaps
 from flask import Flask, request, render_template
-from werkzeug.datastructures import ImmutableMultiDict
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
