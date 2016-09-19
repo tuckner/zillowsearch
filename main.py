@@ -11,11 +11,14 @@ def hello():
 def query():
 	
 	try:
+		startloc = request.args.get("startloc")
+		endloc = request.args.get("endloc")
         	zid1 = request.args.get("zid1")
         	zid2 = request.args.get("zid2")
         	zid3 = request.args.get("zid3")
-        	zroute, zembed = zmaps.genroute(zid1, zid2, zid3)
-        	return render_template('index.html', zid1=zid1, zid2=zid2, zid3=zid3, zroute=zroute, zembed=zembed)
+                zroute, zembed = zmaps.genroute(zid1, zid2, zid3, startloc, endloc)
+                return render_template('index.html', startloc=startloc, endloc=endloc, zid1=zid1, zid2=zid2, zid3=zid3, zroute=zroute, zembed=zembed)
+
 	
 	except:
 		oops = "Error"

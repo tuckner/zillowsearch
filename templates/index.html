@@ -21,6 +21,7 @@
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     }
     </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,17 +75,33 @@
                 <p class="lead">Enter in a couple homes you want to see:</p>
 		<form method='get' action="{{ url_for('query') }}" class="form-horizontal">
 		  <div class="form-group">
-<!--		    <label for="startloc" class="col-sm-2 control-label">Starting Location</label>
+		    <label for="startloc" class="col-sm-2 control-label">Starting Location</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="startloc" name="startloc">
+		      <input type="text" class="form-control" id="startloc" name="startloc" {% if startloc is defined %} value="{{ startloc|e }}" {% endif %}>
 		    </div>
 		  </div>
+		  <script>
+		    function init() {
+			var input = document.getElementById('startloc');
+			var autocomplete = new google.maps.places.Autocomplete(input);
+		    }
+
+		    google.maps.event.addDomListener(window, 'load', init);
+		  </script>
 		  <div class="form-group">
 		    <label for="endloc" class="col-sm-2 control-label">End Location</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="endloc" name="endloc">
+		      <input type="text" class="form-control" id="endloc" name="endloc" {% if endloc is defined %} value="{{ endloc|e }}" {% endif %}>
 		    </div>
-		  </div> -->
+		  </div> 
+                  <script>
+                    function init() {
+                        var input = document.getElementById('endloc');
+                        var autocomplete = new google.maps.places.Autocomplete(input);
+                    }
+
+                    google.maps.event.addDomListener(window, 'load', init);
+                  </script>
                   <div class="form-group">
                     <label for="zid1" class="col-sm-2 control-label">Zillow ID</label>
                     <div class="col-sm-10">
@@ -124,7 +141,7 @@
 		  src="{{ zembed }}" allowfullscreen>
 		</iframe>
 		{% elif oops is defined %}
-		<h1>Error! Try checking your Zillow IDs!</h1>
+		<h1>Error! Try checking your Zillow IDs or your addresses!</h1>
 		{% endif %}
             </div>
         </div>

@@ -3,6 +3,7 @@ import datetime
 import pprint
 import zsearch
 import configparser
+import zgeocode
 
 config = configparser.ConfigParser()
 config.read('api.txt')
@@ -10,10 +11,14 @@ key = config.get('apikeys', 'gkey')
 gmaps = googlemaps.Client(key=key)
 
 def genroute(*args):
-	listcoords = zsearch.findloc(args)
+	
+	listcoords = zsearch.findloc(args[0], args[1], args[2])
 	formatcoords = "[\"" + listcoords[0] + "\", \"" + listcoords[1] + "\", \"" + listcoords[2] + "\"]" 
 	print formatcoords
-	route = gmaps.directions("38.9838505,-94.6218913", "38.9838505,-94.6218913", waypoints=listcoords, optimize_waypoints=True)
+	startloc = zgeocode.teststa(args[3])
+	endloc = zgeocode.testend(args[4])
+	
+	route = gmaps.directions(startloc, endloc, waypoints=listcoords, optimize_waypoints=True)
 
 	routes = []
 	del routes[:]
@@ -23,8 +28,8 @@ def genroute(*args):
 		cords = str(lat) + "," + str(lng)
 		routes.append(cords)
 
-	routelink = "https://www.google.com/maps/dir/38.9838505,-94.6218913/" + routes[0] + "/" + routes[1] + "/" + routes[2] + "/" + routes[3]
-	maplink = "https://google.com/maps/embed/v1/directions?key=" + key + "&origin=38.9838505,-94.6218913&destination=38.9838505,-94.6218913&waypoints=" + routes[0] + "|" + routes[1] + "|" + routes[2]
+	routelink = "https://www.google.com/maps/dir/" + startloc + "/" + routes[0] + "/" + routes[1] + "/" + routes[2] + "/" + endloc 
+	maplink = "https://google.com/maps/embed/v1/directions?key=" + key + "&origin=" + startloc + "&destination=" + endloc + "&waypoints=" + routes[0] + "|" + routes[1] + "|" + routes[2]
 
 	return routelink, maplink
 

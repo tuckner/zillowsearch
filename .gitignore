@@ -2,3 +2,4 @@ api.txt
 zmapsback.py
 zsearch.pyc
 zmaps.pyc
+*.pyc

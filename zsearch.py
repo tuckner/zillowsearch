@@ -11,11 +11,11 @@ config.read('api.txt')
 key = config.get('apikeys', 'zkey')
 coords = []
 
-def findloc(zids):
+def findloc(*args):
 		
 	coords = []
 	del coords[:]
-	for zpid in zids:
+	for zpid in args:
 		detail_data = api.GetZEstimate(key, zpid)
 		datadict = (detail_data.get_dict())
 		lat = datadict['full_address']['latitude']
